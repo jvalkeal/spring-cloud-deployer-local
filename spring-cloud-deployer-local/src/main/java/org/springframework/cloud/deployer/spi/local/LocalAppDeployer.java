@@ -100,6 +100,7 @@ public class LocalAppDeployer extends AbstractLocalDeployerSupport implements Ap
 		boolean useDynamicPort = !request.getDefinition().getProperties().containsKey(SERVER_PORT_KEY);
 		HashMap<String, String> args = new HashMap<>();
 		args.putAll(request.getDefinition().getProperties());
+
 		args.put(JMX_DEFAULT_DOMAIN_KEY, deploymentId);
 		if (!request.getDefinition().getProperties().containsKey(ENDPOINTS_SHUTDOWN_ENABLED_KEY)) {
 			args.put(ENDPOINTS_SHUTDOWN_ENABLED_KEY, "true");
@@ -128,6 +129,7 @@ public class LocalAppDeployer extends AbstractLocalDeployerSupport implements Ap
 				if (useDynamicPort) {
 					args.put(SERVER_PORT_KEY, String.valueOf(port));
 				}
+				args.put("spring.cloud.stream.metrics.applicationName", deploymentId + "." + port);
 				ProcessBuilder builder = buildProcessBuilder(request, args);
 				AppInstance instance = new AppInstance(deploymentId, i, builder, workDir, port);
 				processes.add(instance);
@@ -202,9 +204,12 @@ public class LocalAppDeployer extends AbstractLocalDeployerSupport implements Ap
 
 		private final URL baseUrl;
 
+		private final int port;
+
 		private AppInstance(String deploymentId, int instanceNumber, ProcessBuilder builder, Path workDir, int port) throws IOException {
 			this.deploymentId = deploymentId;
 			this.instanceNumber = instanceNumber;
+			this.port = port;
 			builder.directory(workDir.toFile());
 			String workDirPath = workDir.toFile().getAbsolutePath();
 			this.stdout = Files.createFile(Paths.get(workDirPath, "stdout_" + instanceNumber + ".log")).toFile();
@@ -266,6 +271,7 @@ public class LocalAppDeployer extends AbstractLocalDeployerSupport implements Ap
 			result.put("working.dir", workDir.getAbsolutePath());
 			result.put("stdout", stdout.getAbsolutePath());
 			result.put("stderr", stderr.getAbsolutePath());
+			result.put("uniqueAppId", Integer.toString(port));
 			result.put("url", baseUrl.toString());
 			return result;
 		}
