@@ -129,7 +129,7 @@ public class LocalAppDeployer extends AbstractLocalDeployerSupport implements Ap
 				if (useDynamicPort) {
 					args.put(SERVER_PORT_KEY, String.valueOf(port));
 				}
-				args.put("spring.cloud.stream.metrics.applicationName", deploymentId + "." + port);
+				args.put("spring.cloud.stream.metrics.key", deploymentId + "." + port);
 				ProcessBuilder builder = buildProcessBuilder(request, args);
 				AppInstance instance = new AppInstance(deploymentId, i, builder, workDir, port);
 				processes.add(instance);
