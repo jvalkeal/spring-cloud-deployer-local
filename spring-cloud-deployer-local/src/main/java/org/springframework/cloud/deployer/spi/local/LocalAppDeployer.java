@@ -129,7 +129,7 @@ public class LocalAppDeployer extends AbstractLocalDeployerSupport implements Ap
 				if (useDynamicPort) {
 					args.put(SERVER_PORT_KEY, String.valueOf(port));
 				}
-				args.put("spring.cloud.stream.metrics.key", deploymentId + "." + port);
+				args.put("spring.cloud.stream.metrics.key", deploymentId + ".${spring.application.index}");
 				ProcessBuilder builder = buildProcessBuilder(request, args);
 				AppInstance instance = new AppInstance(deploymentId, i, builder, workDir, port);
 				processes.add(instance);
@@ -217,7 +217,7 @@ public class LocalAppDeployer extends AbstractLocalDeployerSupport implements Ap
 			builder.redirectOutput(this.stdout);
 			builder.redirectError(this.stderr);
 			builder.environment().put("INSTANCE_INDEX", Integer.toString(instanceNumber));
-			builder.environment().put("spring.application.index", Integer.toString(instanceNumber));
+			builder.environment().put("spring.application.index", Integer.toString(port));
 			this.process = builder.start();
 			this.workDir = workDir.toFile();
 			this.baseUrl = new URL("http", Inet4Address.getLocalHost().getHostAddress(), port, "");
