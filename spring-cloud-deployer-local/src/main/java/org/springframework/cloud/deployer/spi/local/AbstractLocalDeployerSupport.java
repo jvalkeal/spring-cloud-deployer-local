@@ -134,10 +134,19 @@ public abstract class AbstractLocalDeployerSupport {
 		else {
 			commands = this.javaCommandBuilder.buildExecutionCommand(request, args, appInstanceNumber);
 		}
+		if (isWin()) {
+			for (int i = 0; i < commands.length; i++) {
+				commands[i] = commands[i].replace("\"", "\\\"");
+			}
+		}
 		ProcessBuilder builder = new ProcessBuilder(commands);
 		retainEnvVars(builder.environment().keySet());
 		builder.environment().putAll(args);
 		return builder;
+	}
+
+	static boolean isWin() {
+		return System.getProperty("os.name").toLowerCase().indexOf("win") >= 0;
 	}
 
 	/**
