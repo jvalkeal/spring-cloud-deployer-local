@@ -27,6 +27,7 @@ import static org.springframework.cloud.deployer.spi.test.EventuallyMatcher.even
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.Map.Entry;
 
 import org.hamcrest.Matchers;
@@ -64,6 +65,11 @@ public class LocalAppDeployerIntegrationTests extends AbstractAppDeployerIntegra
 	@Override
 	protected AppDeployer provideAppDeployer() {
 		return appDeployer;
+	}
+
+	@Override
+	protected String randomName() {
+		return name.getMethodName() + "-0123456789-0123456789-0123456789-0123456789-0123456789-0123456789-0123456789-0123456789-0123456789-0123456789-" + UUID.randomUUID().toString();
 	}
 
 	@Test
