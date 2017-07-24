@@ -312,6 +312,7 @@ public class LocalAppDeployer extends AbstractLocalDeployerSupport implements Ap
 			this.workFile = workDir.toFile();
 			this.attributes.put("working.dir", this.workFile.getAbsolutePath());
 
+			System.out.println("XXXXXXXXXXX " + this.workFile.getAbsoluteFile() + "/" + this.workFile.getAbsoluteFile().exists());
 			logger.info("XXXXXXXXXXXXXX {} {}", this.workFile.getAbsoluteFile(), this.workFile.getAbsoluteFile().exists());
 
 			this.process = builder.start();
