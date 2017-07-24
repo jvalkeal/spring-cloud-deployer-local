@@ -24,6 +24,7 @@ import static org.springframework.cloud.deployer.spi.app.DeploymentState.deploye
 import static org.springframework.cloud.deployer.spi.app.DeploymentState.unknown;
 import static org.springframework.cloud.deployer.spi.test.EventuallyMatcher.eventually;
 
+import java.nio.ByteBuffer;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -64,6 +65,18 @@ public class LocalAppDeployerIntegrationTests extends AbstractAppDeployerIntegra
 	@Override
 	protected AppDeployer provideAppDeployer() {
 		return appDeployer;
+	}
+
+	@Override
+	protected String randomName() {
+		if (LocalDeployerUtils.isWindows()) {
+			String uuid = super.randomName();
+			long l = ByteBuffer.wrap(uuid.toString().getBytes()).getLong();
+			return Long.toString(l, Character.MAX_RADIX);
+		}
+		else {
+			return super.randomName();
+		}
 	}
 
 	@Test
