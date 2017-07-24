@@ -311,6 +311,9 @@ public class LocalAppDeployer extends AbstractLocalDeployerSupport implements Ap
 		private void start(ProcessBuilder builder, Path workDir) throws IOException {
 			this.workFile = workDir.toFile();
 			this.attributes.put("working.dir", this.workFile.getAbsolutePath());
+
+			logger.info("XXXXXXXXXXXXXX {} {}", this.workFile.getAbsoluteFile(), this.workFile.getAbsoluteFile().exists());
+
 			this.process = builder.start();
 			this.pid = getLocalProcessPid(this.process);
 			if (pid > 0) {
