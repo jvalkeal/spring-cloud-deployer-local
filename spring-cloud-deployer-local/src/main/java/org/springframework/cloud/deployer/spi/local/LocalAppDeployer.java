@@ -118,7 +118,23 @@ public class LocalAppDeployer extends AbstractLocalDeployerSupport implements Ap
 			Path deploymentGroupDir = Paths.get(logPathRoot.toFile().getAbsolutePath(),
 					group + "-" + System.currentTimeMillis());
 			if (!Files.exists(deploymentGroupDir)) {
-				Files.createDirectory(deploymentGroupDir);
+
+//				deploymentGroupDir.forEach(p -> {
+//					boolean exists = Files.exists(p);
+//					logger.info("Path {} exists {}", p, exists);
+//					if (!exists) {
+//						logger.info("Create Path {}", p);
+//						try {
+//							Files.createDirectories(p);
+//						} catch (IOException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						}
+//					}
+//				});
+
+				Files.createDirectories(deploymentGroupDir);
+//				Files.createDirectory(deploymentGroupDir);
 				deploymentGroupDir.toFile().deleteOnExit();
 			}
 			Path workDir = Files
@@ -296,8 +312,8 @@ public class LocalAppDeployer extends AbstractLocalDeployerSupport implements Ap
 			this.workFile = workDir.toFile();
 			this.attributes.put("working.dir", this.workFile.getAbsolutePath());
 			this.process = builder.start();
-		    this.pid = getLocalProcessPid(this.process);
-		    if (pid > 0) {
+			this.pid = getLocalProcessPid(this.process);
+			if (pid > 0) {
 				// add pid if we got it
 				attributes.put("pid", Integer.toString(pid));
 			}
