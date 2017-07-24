@@ -28,6 +28,7 @@ import java.nio.ByteBuffer;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.Map.Entry;
 
 import org.hamcrest.Matchers;
@@ -70,9 +71,9 @@ public class LocalAppDeployerIntegrationTests extends AbstractAppDeployerIntegra
 	@Override
 	protected String randomName() {
 		if (LocalDeployerUtils.isWindows()) {
-			String uuid = super.randomName();
+			String uuid = UUID.randomUUID().toString();
 			long l = ByteBuffer.wrap(uuid.toString().getBytes()).getLong();
-			return Long.toString(l, Character.MAX_RADIX);
+			return name.getMethodName() + Long.toString(l, Character.MAX_RADIX);
 		}
 		else {
 			return super.randomName();
