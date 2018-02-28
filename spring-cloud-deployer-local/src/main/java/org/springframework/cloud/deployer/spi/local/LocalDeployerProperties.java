@@ -71,7 +71,7 @@ public class LocalDeployerProperties {
 
 	private static final String JAVA_COMMAND = LocalDeployerUtils.isWindows() ? "java.exe" : "java";
 
-	private static final String[] ENV_VARS_TO_INHERIT_DEFAULTS_WIN = { "TMP", "TEMP", "Path",
+	private static final String[] ENV_VARS_TO_INHERIT_DEFAULTS_WIN = { "TMP", "TEMP", "PATH", "Path",
 			AbstractLocalDeployerSupport.SPRING_APPLICATION_JSON };
 
 	private static final String[] ENV_VARS_TO_INHERIT_DEFAULTS_OTHER = { "TMP", "LANG", "LANGUAGE", "LC_.*", "PATH",
