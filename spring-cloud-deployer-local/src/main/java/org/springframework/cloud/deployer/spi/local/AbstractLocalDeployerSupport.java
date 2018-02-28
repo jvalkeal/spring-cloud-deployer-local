@@ -200,6 +200,7 @@ public abstract class AbstractLocalDeployerSupport {
 			builder.environment().putAll(appInstanceEnv);
 			builder.environment().putAll(appInstanceEnvToUse);
 		}
+		System.out.println("DDD " + builder.environment());
 		retainEnvVars(builder.environment().keySet());
 
 		if (this.containsValidDebugPort(request.getDeploymentProperties(), deploymentId)) {
