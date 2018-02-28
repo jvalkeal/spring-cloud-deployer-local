@@ -109,6 +109,10 @@ public class LocalAppDeployerIntegrationTests extends AbstractAppDeployerIntegra
 
 	@Test
 	public void testEnvVariablesInheritedViaEnvEndpoint() {
+		if (useDocker) {
+			// would not expect to be able to check anything on docker
+			return;
+		}
 		Map<String, String> properties = new HashMap<>();
 		properties.put("management.security.enabled", "false");
 		AppDefinition definition = new AppDefinition(randomName(), properties);
@@ -145,7 +149,7 @@ public class LocalAppDeployerIntegrationTests extends AbstractAppDeployerIntegra
 			assertThat(env, containsString("\"Path\""));
 		}
 		else {
-			assertThat(env, containsString("\"PATH\""));
+			assertThat(env, containsString("\"PATHX\""));
 		}
 	}
 
